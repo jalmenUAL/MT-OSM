@@ -41,25 +41,29 @@ declare function mt:type($e,$type)
 
 (: TagsCOMPkv :)
  
-declare function mt:TagsCOMPkv($O1,$O2,$epsilon,$delta)
+
+
+
+declare function mt:TagsCOMPkv($alpha,$beta,$O1,$O2,$delta,$epsilon)
 {
-   if (count($O1 intersect $O2) <= $epsilon)
+   if (count($O1 intersect $O2) >= $delta)
    then
-   count
-   (for $e2 in $O2
-       where
-       some $tag2 in $e2/tag
-       satisfies
-       some $e in $O1
-       satisfies
-       some $tag in $e/tag 
-       satisfies
-       not(string(number($tag/@v)) != 'NaN') and
-       not($tag/@v="yes") and
-       not($tag/@v="no") and
-       $tag2/@v=$tag/@v and not($tag/@k=$tag2/@k) return $e2) <= $delta
+   every $alphap in $O2/tag[@v=$beta]/@k 
+   satisfies
+   ($alpha=$alphap)
+   or 
+   count(
+   for $e2 in $O2
+   where
+    $e2/tag[@k=$alphap and @v=$beta]
+    and
+     not(string(number($beta)) != 'NaN') and
+       not($beta="yes") and
+       not($beta="no")  
+   return $e2) <= $epsilon
    else true()
 };
+ 
 
 (: TagsCOMPkvTest :)
 
@@ -74,7 +78,7 @@ for $beta in $O1/tag[@k=$key]/@v
 let $i2 := function($x){some $z in $x/tag satisfies ($z/@v=$beta)}
 let $O2 := mt:M($map,"*",$i2)
 return
-if (not(mt:TagsCOMPkv($O1,$O2,$epsilon,$delta)))
+if (not(mt:TagsCOMPkv($key,$beta,$O1,$O2,$epsilon,$delta)))
 then $beta/../..)
 return
 if (empty($result)) then

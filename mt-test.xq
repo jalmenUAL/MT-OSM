@@ -4,11 +4,10 @@ import module namespace mt = 'mt' at 'mt-osm.xqm';
 
 
 
+ 
 
+mt:TagsCOMPkvTest(.,"amenity",2,1,())
 
-(:
-mt:TagsCOMPkvTest(.,"building",1,1,())
-:)
 
 (:
 mt:TagsCOMPkkTest(.,"amenity",2,())
