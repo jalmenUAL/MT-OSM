@@ -186,7 +186,7 @@ declare function mt:TagsName($map,$O1,$O2,$beta,$delta,$epsilon)
   if (count($O1)>=$delta) then
   let $i3 := function($x){$x[every $z in ./tag satisfies not($z/@v=$beta)]}
   let $O3 := mt:M($map,"*",$i3)
-  where count($O2 intersect $O3)<=$epsilon
+  where count($O2 intersect $O3)>$epsilon
   return ($O2 intersect $O3)
 };
 
