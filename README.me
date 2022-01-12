@@ -1,2 +1,29 @@
 Implementation of the Metamorphic Tester for OpenStreetMap
 Developed at the University of Almería
+
+
+In order to check metamorphic relations on a map please proceed as follows:
+
+1. Install BaseX XQuery interpreter from the BaseX Web page: https://basex.org/download/
+
+2. Download from Github the XQuery programs:
+
+      2.1 TAGS Testing: In folder TAGS/src files mt-osm-tags.xqm (library) and mt-test-tags.xq (main program)
+      
+      2.2 GEOMETRIES Testing: In folder GEOMETRY/src mt-osm-geometry.xqm (library) and mt-test-geometry.xq (main program)
+
+3. Download any map from OpenStreetMap. The XML version of the map is required. Please follow the instructions at https://wiki.openstreetmap.org/wiki/Downloading_data
+
+4. Load the map in the BaseX interpreter. Follow this instructions: https://docs.basex.org/wiki/Graphical_User_Interface
+
+5. Call to the metamorphic relation. For instance:
+
+    mt:TagsCOMPkvkTest(.,"building",10,2,())
+    
+    where "building" is the seed key to be tested and 10,2 are the thresholds.
+    
+    mt:NoDeadlockTest(.,"Calle Calzada de Castro",())
+
+    where "Calle Calzada de Castro" is the seed street.
+    
+6. The results of the testing are shown in XML format.
